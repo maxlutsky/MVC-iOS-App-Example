@@ -10,7 +10,7 @@ import UIKit
 class ViewController: UIViewController, UITextFieldDelegate{
 
     @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var searchField: UITextField!
+    @IBOutlet weak var searchField: TextField!
     @IBOutlet weak var searchButton: UIButton!
     
     var movies: [Movie] = []
@@ -28,8 +28,10 @@ class ViewController: UIViewController, UITextFieldDelegate{
         collectionView.dataSource = self
         searchField.becomeFirstResponder()
         searchField.delegate = self
-        searchButton.layer.cornerRadius = 5
-        searchField.layer.cornerRadius = 5
+        searchButton.layer.cornerRadius = UIConstants.cornerRadius
+        searchField.layer.cornerRadius = UIConstants.cornerRadius
+        searchField.attributedPlaceholder = NSAttributedString(string: "Enter the name of a movie",
+                                                               attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
     }
     
     func getMovies(search: String) {

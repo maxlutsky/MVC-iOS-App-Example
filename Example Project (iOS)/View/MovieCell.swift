@@ -19,7 +19,7 @@ class MovieCell: UICollectionViewCell {
     }
     
     func setupCell(movie: Movie) {
-        widthConstraint.constant = UIScreen.main.bounds.width/3.5
+        widthConstraint.constant = UIConstants.movieCellWidth
         movieTitle.text = movie.Title
         if let imageUrl = movie.Poster {
             ApiManager.getImageDataFromURL(url: imageUrl) { [weak self] (data) in
@@ -29,7 +29,7 @@ class MovieCell: UICollectionViewCell {
             }
         }
         movieImage.contentMode = .scaleAspectFill
-        movieImage.layer.cornerRadius = 5
-        movieView.layer.cornerRadius = 5
+        movieImage.layer.cornerRadius = UIConstants.cornerRadius
+        movieView.layer.cornerRadius = UIConstants.cornerRadius
     }
 }

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		50269C3426416ACC00538495 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50269C3326416ACC00538495 /* CustomTextField.swift */; };
+		50269C3726416C1800538495 /* UIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50269C3626416C1800538495 /* UIConstants.swift */; };
 		50FBF1E3263AE19500F4BF99 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FBF1E2263AE19500F4BF99 /* AppDelegate.swift */; };
 		50FBF1E5263AE19500F4BF99 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FBF1E4263AE19500F4BF99 /* SceneDelegate.swift */; };
 		50FBF1E7263AE19500F4BF99 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FBF1E6263AE19500F4BF99 /* ViewController.swift */; };
@@ -20,6 +22,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		50269C3326416ACC00538495 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		50269C3626416C1800538495 /* UIConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIConstants.swift; sourceTree = "<group>"; };
 		50FBF1DF263AE19500F4BF99 /* Example Project (iOS).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Example Project (iOS).app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		50FBF1E2263AE19500F4BF99 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		50FBF1E4263AE19500F4BF99 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -99,6 +103,8 @@
 			isa = PBXGroup;
 			children = (
 				50FC79E826414D66007ACEA9 /* MovieCell.swift */,
+				50269C3326416ACC00538495 /* CustomTextField.swift */,
+				50269C3626416C1800538495 /* UIConstants.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -183,8 +189,10 @@
 			files = (
 				50FC79F326414DED007ACEA9 /* Movie.swift in Sources */,
 				50FBF1ED263AE19500F4BF99 /* Example_Project__iOS_.xcdatamodeld in Sources */,
+				50269C3726416C1800538495 /* UIConstants.swift in Sources */,
 				50FBF1E7263AE19500F4BF99 /* ViewController.swift in Sources */,
 				50FBF1E3263AE19500F4BF99 /* AppDelegate.swift in Sources */,
+				50269C3426416ACC00538495 /* CustomTextField.swift in Sources */,
 				50FC79E926414D66007ACEA9 /* MovieCell.swift in Sources */,
 				50FC79EC26414DC5007ACEA9 /* ApiManager.swift in Sources */,
 				50FBF1E5263AE19500F4BF99 /* SceneDelegate.swift in Sources */,
