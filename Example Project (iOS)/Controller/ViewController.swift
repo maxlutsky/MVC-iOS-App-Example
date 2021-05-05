@@ -13,13 +13,16 @@ class ViewController: UIViewController, UITextFieldDelegate{
     @IBOutlet weak var searchField: TextField!
     @IBOutlet weak var searchButton: UIButton!
     
+    let progressView = UIActivityIndicatorView()
     var movies: [Movie] = []
+    var page: Int = 1
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         #if DEBUG
-        getMovies(search: "Fast")
+        searchField.text = "Fast"
+        getMovies(search: "Fast", page: page)
         #endif
     }
     
@@ -32,29 +35,52 @@ class ViewController: UIViewController, UITextFieldDelegate{
         searchField.layer.cornerRadius = UIConstants.cornerRadius
         searchField.attributedPlaceholder = NSAttributedString(string: "Enter the name of a movie",
                                                                attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        
+        progressView.frame = CGRect(x: 0.0, y: 0.0, width: 40.0, height: 40.0)
+        progressView.center = view.center
     }
     
-    func getMovies(search: String) {
-        
-        ApiManager.getMoviesBySearch(search: search) { [weak self] (response, error) in
+    func getMovies(search: String, page: Int) {
+        showProgressView()
+        if page == 1 {
+            movies.removeAll()
+            collectionView.reloadData()
+        }
+        ApiManager.getMoviesBySearch(search: search, page: page) { [weak self] (response, error) in
             if let error = error {
                 self?.presentAlert(title: error.localizedDescription)
             } else if let response = response {
-                self?.movies = response
+                self?.movies.append(contentsOf: response)
                 self?.collectionView.reloadData()
             }
+            self?.hideProgressView()
         }
+    }
+    
+    func showProgressView(){
+        view.addSubview(progressView)
+        view.isUserInteractionEnabled = false
+        progressView.bringSubviewToFront(view)
+        progressView.startAnimating()
+    }
+    
+    func hideProgressView(){
+        progressView.stopAnimating()
+        view.isUserInteractionEnabled = true
+        progressView.removeFromSuperview()
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
-        getMovies(search: searchField.text ?? "")
+        page = 1
+        getMovies(search: searchField.text ?? "", page: page)
         return true
     }
     
     @IBAction func searchButton(_ sender: Any) {
         searchField.resignFirstResponder()
-        getMovies(search: searchField.text ?? "")
+        page = 1
+        getMovies(search: searchField.text ?? "", page: page)
     }
 }
 
@@ -64,8 +90,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "movieCell", for: indexPath) as? MovieCell {
-            
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "movieCell", for: indexPath) as? MovieCell, indexPath.row < movies.count {
             cell.setupCell(movie: movies[indexPath.row])
             return cell
         } else {
@@ -73,6 +98,12 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
         }
     }
     
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if indexPath.row == movies.count - 4 {
+            page += 1
+            getMovies(search: searchField.text ?? "", page: page)
+        }
+    }
     
 }
 

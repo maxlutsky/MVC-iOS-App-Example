@@ -12,10 +12,14 @@ class ApiManager {
     static let apiKey = "db54b145"
     static let decoder = JSONDecoder()
     
-    static func getMoviesBySearch(search: String, closure: @escaping ([Movie]?, Error?) -> Void) {
+    static let nsCache = NSCache<NSString, NSData>()
+    
+    static func getMoviesBySearch(search: String, page: Int, closure: @escaping ([Movie]?, Error?) -> Void) {
         if let URL = URL(string: baseUrl) {
             let params: [String: String] = ["apikey" :apiKey,
-                                            "s": search]
+                                            "s": search,
+                                            "page": String(page)]
+            print(params)
             let task = URLSession.shared.dataTask(with: URL.appendURLParams(params: params)) { (data, response, error) in
                 if let error = error {
                     DispatchQueue.main.async {
@@ -29,6 +33,9 @@ class ApiManager {
                         }
                     } catch {
                         print(error.localizedDescription)
+                        DispatchQueue.main.async {
+                            closure(nil, nil)
+                        }
                     }
                 }
                 print(data)
@@ -40,9 +47,13 @@ class ApiManager {
     }
     
     static func getImageDataFromURL(url: String, closure: @escaping (Data?) -> Void){
-        if let url = URL(string: url) {
-            let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+        
+        if let data = nsCache.object(forKey: url as NSString) {
+            closure(data as Data)
+        } else if let URL = URL(string: url) {
+            let task = URLSession.shared.dataTask(with: URL) { (data, response, error) in
                 if let data = data {
+                    nsCache.setObject(data as NSData, forKey: url as NSString)
                     DispatchQueue.main.async {
                         closure(data)
                     }

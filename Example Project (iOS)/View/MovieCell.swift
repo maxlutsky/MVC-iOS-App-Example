@@ -18,6 +18,12 @@ class MovieCell: UICollectionViewCell {
         super.awakeFromNib()
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        movieImage.image = nil
+        movieTitle.text = ""
+    }
+    
     func setupCell(movie: Movie) {
         widthConstraint.constant = UIConstants.movieCellWidth
         movieTitle.text = movie.Title
