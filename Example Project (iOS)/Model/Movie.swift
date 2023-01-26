@@ -8,10 +8,19 @@
 import Foundation
 
 struct Movies: Codable {
-    var Search: [Movie]
+    var search: [Movie]
+    
+    enum CodingKeys: String, CodingKey {
+        case search = "Search"
+    }
 }
 
 struct Movie: Codable {
-    var Title: String?
-    var Poster: String?
+    var title: String?
+    var poster: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case title = "Title"
+        case poster = "Poster"
+    }
 }

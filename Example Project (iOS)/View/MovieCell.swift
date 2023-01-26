@@ -14,6 +14,8 @@ class MovieCell: UICollectionViewCell {
     @IBOutlet weak var widthConstraint: NSLayoutConstraint!
     @IBOutlet weak var movieView: UIView!
     
+    private var moviePosterUrl: String = ""
+    
     override class func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -22,14 +24,18 @@ class MovieCell: UICollectionViewCell {
         super.prepareForReuse()
         movieImage.image = nil
         movieTitle.text = ""
+        moviePosterUrl = ""
     }
     
-    func setupCell(movie: Movie) {
+    func setupCell(movie: Movie, cacheManager: CacheProtocol) {
         widthConstraint.constant = UIConstants.movieCellWidth
-        movieTitle.text = movie.Title
-        if let imageUrl = movie.Poster {
-            ApiManager.getImageDataFromURL(url: imageUrl) { [weak self] (data) in
-                if let data = data {
+        movieTitle.text = movie.title
+        
+        if let imageUrl = movie.poster {
+            moviePosterUrl = imageUrl
+            cacheManager.getImageDataFromURL(url: imageUrl) { [weak self] (data, posterUrl) in
+                if let data = data,
+                   self?.moviePosterUrl == posterUrl {
                     self?.movieImage.image = UIImage(data: data)
                 }
             }

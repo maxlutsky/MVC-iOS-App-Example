@@ -13,6 +13,11 @@ class ViewController: UIViewController, UITextFieldDelegate{
     @IBOutlet weak var searchField: TextField!
     @IBOutlet weak var searchButton: UIButton!
     
+    var moviesSource: MoviesSourceProtocol = MoviesSource()
+    var cacheManager: CacheProtocol = CacheManager()
+    
+    var currentSearch: String?
+    
     let progressView = UIActivityIndicatorView()
     var movies: [Movie] = []
     var page: Int = 1
@@ -38,6 +43,9 @@ class ViewController: UIViewController, UITextFieldDelegate{
         
         progressView.frame = CGRect(x: 0.0, y: 0.0, width: 40.0, height: 40.0)
         progressView.center = view.center
+        view.addSubview(progressView)
+        progressView.bringSubviewToFront(view)
+        progressView.isHidden = true
     }
     
     func getMovies(search: String, page: Int) {
@@ -46,7 +54,7 @@ class ViewController: UIViewController, UITextFieldDelegate{
             movies.removeAll()
             collectionView.reloadData()
         }
-        ApiManager.getMoviesBySearch(search: search, page: page) { [weak self] (response, error) in
+        moviesSource.getMoviesBySearch(search: search, page: page) { [weak self] (response, error) in
             if let error = error {
                 self?.presentAlert(title: error.localizedDescription)
             } else if let response = response {
@@ -58,29 +66,38 @@ class ViewController: UIViewController, UITextFieldDelegate{
     }
     
     func showProgressView(){
-        view.addSubview(progressView)
         view.isUserInteractionEnabled = false
-        progressView.bringSubviewToFront(view)
         progressView.startAnimating()
+        progressView.isHidden = false
     }
     
     func hideProgressView(){
         progressView.stopAnimating()
         view.isUserInteractionEnabled = true
-        progressView.removeFromSuperview()
+        progressView.isHidden = true
+    }
+    
+    func presentAlert(title: String?, message: String = "") {
+        let alert = UIAlertController(title: title ?? "", message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default)
+        alert.addAction(okAction)
+        self.present(alert, animated: true)
+    }
+    
+    func startSearch() {
+        searchField.resignFirstResponder()
+        currentSearch = searchField.text
+        page = 1
+        getMovies(search: searchField.text ?? "", page: page)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        page = 1
-        getMovies(search: searchField.text ?? "", page: page)
+        startSearch()
         return true
     }
-    
+
     @IBAction func searchButton(_ sender: Any) {
-        searchField.resignFirstResponder()
-        page = 1
-        getMovies(search: searchField.text ?? "", page: page)
+        startSearch()
     }
 }
 
@@ -90,8 +107,9 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "movieCell", for: indexPath) as? MovieCell, indexPath.row < movies.count {
-            cell.setupCell(movie: movies[indexPath.row])
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieCell.id, for: indexPath) as? MovieCell,
+            indexPath.row < movies.count {
+            cell.setupCell(movie: movies[indexPath.row], cacheManager: cacheManager)
             return cell
         } else {
             return UICollectionViewCell()
@@ -103,15 +121,5 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
             page += 1
             getMovies(search: searchField.text ?? "", page: page)
         }
-    }
-    
-}
-
-extension ViewController {
-    func presentAlert(title: String?, message: String = "") {
-        let alert = UIAlertController(title: title ?? "", message: message, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default)
-        alert.addAction(okAction)
-        self.present(alert, animated: true)
     }
 }

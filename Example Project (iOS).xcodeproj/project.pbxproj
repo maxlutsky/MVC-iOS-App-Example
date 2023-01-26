@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		50269C3426416ACC00538495 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50269C3326416ACC00538495 /* CustomTextField.swift */; };
 		50269C3726416C1800538495 /* UIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50269C3626416C1800538495 /* UIConstants.swift */; };
+		50953605298289C200E0D55C /* MoviesSourceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50953604298289C200E0D55C /* MoviesSourceProtocol.swift */; };
+		5095360729828B1F00E0D55C /* CacheProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5095360629828B1F00E0D55C /* CacheProtocol.swift */; };
 		50CEA1412642803800362308 /* UIExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CEA1402642803800362308 /* UIExtensions.swift */; };
 		50FBF1E3263AE19500F4BF99 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FBF1E2263AE19500F4BF99 /* AppDelegate.swift */; };
 		50FBF1E5263AE19500F4BF99 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FBF1E4263AE19500F4BF99 /* SceneDelegate.swift */; };
@@ -18,13 +20,15 @@
 		50FBF1EF263AE19600F4BF99 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 50FBF1EE263AE19600F4BF99 /* Assets.xcassets */; };
 		50FBF1F2263AE19600F4BF99 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50FBF1F0263AE19600F4BF99 /* LaunchScreen.storyboard */; };
 		50FC79E926414D66007ACEA9 /* MovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FC79E826414D66007ACEA9 /* MovieCell.swift */; };
-		50FC79EC26414DC5007ACEA9 /* ApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FC79EB26414DC5007ACEA9 /* ApiManager.swift */; };
+		50FC79EC26414DC5007ACEA9 /* MoviesSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FC79EB26414DC5007ACEA9 /* MoviesSource.swift */; };
 		50FC79F326414DED007ACEA9 /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FC79F226414DED007ACEA9 /* Movie.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		50269C3326416ACC00538495 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		50269C3626416C1800538495 /* UIConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIConstants.swift; sourceTree = "<group>"; };
+		50953604298289C200E0D55C /* MoviesSourceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesSourceProtocol.swift; sourceTree = "<group>"; };
+		5095360629828B1F00E0D55C /* CacheProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheProtocol.swift; sourceTree = "<group>"; };
 		50CEA1402642803800362308 /* UIExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIExtensions.swift; sourceTree = "<group>"; };
 		50FBF1DF263AE19500F4BF99 /* Example Project (iOS).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Example Project (iOS).app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		50FBF1E2263AE19500F4BF99 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -36,7 +40,7 @@
 		50FBF1F1263AE19600F4BF99 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		50FBF1F3263AE19600F4BF99 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		50FC79E826414D66007ACEA9 /* MovieCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCell.swift; sourceTree = "<group>"; };
-		50FC79EB26414DC5007ACEA9 /* ApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiManager.swift; sourceTree = "<group>"; };
+		50FC79EB26414DC5007ACEA9 /* MoviesSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesSource.swift; sourceTree = "<group>"; };
 		50FC79F226414DED007ACEA9 /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -115,7 +119,9 @@
 		50FC79F9264154A5007ACEA9 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				50FC79EB26414DC5007ACEA9 /* ApiManager.swift */,
+				50FC79EB26414DC5007ACEA9 /* MoviesSource.swift */,
+				5095360629828B1F00E0D55C /* CacheProtocol.swift */,
+				50953604298289C200E0D55C /* MoviesSourceProtocol.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -190,6 +196,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5095360729828B1F00E0D55C /* CacheProtocol.swift in Sources */,
 				50FC79F326414DED007ACEA9 /* Movie.swift in Sources */,
 				50FBF1ED263AE19500F4BF99 /* Example_Project__iOS_.xcdatamodeld in Sources */,
 				50269C3726416C1800538495 /* UIConstants.swift in Sources */,
@@ -197,8 +204,9 @@
 				50FBF1E7263AE19500F4BF99 /* ViewController.swift in Sources */,
 				50FBF1E3263AE19500F4BF99 /* AppDelegate.swift in Sources */,
 				50269C3426416ACC00538495 /* CustomTextField.swift in Sources */,
+				50953605298289C200E0D55C /* MoviesSourceProtocol.swift in Sources */,
 				50FC79E926414D66007ACEA9 /* MovieCell.swift in Sources */,
-				50FC79EC26414DC5007ACEA9 /* ApiManager.swift in Sources */,
+				50FC79EC26414DC5007ACEA9 /* MoviesSource.swift in Sources */,
 				50FBF1E5263AE19500F4BF99 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
